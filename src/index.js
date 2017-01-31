@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 
 //Задание 2В
 
-app.get('/task2', (req, res) => {
+app.all('/task2', (req, res) => {
     let fullname = req.query.fullname || '';
     fullname = fullname.replace(/[0-9]/g, '');
     const preresult = fullname.split(' ');
@@ -37,9 +37,23 @@ app.get('/task2', (req, res) => {
         result = 'Invalid fullname';
     }
 
-    
-
     res.send(result);
+    
+});
+
+// Задание 2С
+
+app.get('/task2c', (req, res) => {
+    let result = '';
+    let url = req.query.username || '';
+
+    if(url.length > 0) {
+        result = url.replace(/(((http(s|)\:\/\/)|(\/\/)|(www\.)|\@)|(.*)\/)|(\?.+)/gi, '');
+        result = `@${result}`;
+    } else {
+        result = 'Invalid username'
+    }
+    res.send(`${result}`);
 });
 
 app.listen(3000, () => {
